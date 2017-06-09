@@ -55,7 +55,7 @@ print_r($players);
 $fh = fopen('./results.txt','w');
 foreach($players as $player){
 	$result = $player['email']."\n";
-	$result .="Here are your Philly Boon lottery results: \n";
+	$result .="Here are your Philly Boon lottery results for $player[character]: \n";
 	$result .="Boons given:\n\n";
 	foreach($boontypes as $boon){
 		if(isset($player[$boon.'_given'])){
