@@ -14,11 +14,12 @@ while($row = fgetcsv($fh)){
 	}
 	if(isset($player['Timestamp'])) unset($player['Timestamp']);
 	$player['MES'] = strtoupper(trim($player['MES']));
-	$players[$player['MES']] = $player;
+	$player['id'] = $player['MES'].uniqid();
+	$players[$player['id']] = $player;
 }
 fclose($fh);
 $boontypes = Array('trivial','minor','major','blood','life');
-//$boontypes = Array('minor');
+//$boontypes = Array('life');
 foreach($boontypes as $boon){
 	//let's calculate boon results for each type
 	try{
@@ -93,11 +94,16 @@ function personinfo($player){
 //As we're looping through, we pull people out of the pool once they get a chance to give, so everyone is able to give a boon,
 //Then pop them back in once everyone's gotten a turn, and do it again.
 function process_boons($type, $players){
-	$boongivers = array_column($players,$type,'MES');
-	print_r($boongivers);
+	$boongivers = array_column($players,$type,'id');
+	
 	foreach($boongivers as $mes => $count){
+		if(!$count){
+			$boongivers[$mes] = 0;
+			$count = 0;
+		}
 		if($count == 0) unset($boongivers[$mes]);
 	}
+	print_r($boongivers);
 	if(count($boongivers) == 0){
 		throw new Exception('no boons to give '.$type);
 	}elseif(count($boongivers) == 1){
@@ -111,7 +117,6 @@ function process_boons($type, $players){
 	$lastgiver = $firstreceiver;
 	$boonpool = deduct_boon($boonpool,$lastgiver);
 	$givers = Array($lastgiver);
-
 	while(count($boonpool)){
 		//find a boon for the last giver
 		$nextreceiver = $lastgiver;
@@ -140,10 +145,6 @@ function process_boons($type, $players){
 			//we've hit the bottom of our barrel and there's a guy with boons left.
 			//Step back and stop
 			echo "we hit the end and there's boons left!\n";
-			
-			$result = Array('giver' => $firstreceiver, 'receiver' => $lastgiver);
-			print_r($result);
-			$boonresults[] = $result;
 			break;
 		}
 		$lastgiver = $nextgiver;
@@ -153,6 +154,10 @@ function process_boons($type, $players){
 		print_r($result);
 		$boonresults[] = $result;
 	}
+	//tie the last giver to the first receiver
+	$result = Array('giver' => $firstreceiver, 'receiver' => $lastgiver);
+	print_r($result);
+	$boonresults[] = $result;
 	print_r($boonresults);
 	return $boonresults;
 }
