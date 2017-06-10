@@ -60,7 +60,7 @@ foreach($players as $player){
 	$result .="Boons given:\n\n";
 	foreach($boontypes as $boon){
 		if(isset($player[$boon.'_given'])){
-			$result.=$boon." boons:\n";
+			$result.=ucwords($boon)." boons:\n";
 			foreach($player[$boon.'_given'] as $person){
 				$result.=personinfo($players[$person]);
 			}
@@ -71,7 +71,7 @@ foreach($players as $player){
 	$result .="Boons received:\n\n";
 	foreach($boontypes as $boon){
 		if(isset($player[$boon.'_received'])){
-			$result.=$boon." boons:\n";
+			$result.=ucwords($boon)." boons:\n";
 			foreach($player[$boon.'_received'] as $person){
 				$result.=personinfo($players[$person]);
 			}
