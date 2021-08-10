@@ -1,6 +1,9 @@
 ## JIRA Task Link
 Provide a link to your Jira Task here
 
+## Related Pull Requests
+If you have a related DB Migration
+
 ## Task Description
 
 
@@ -10,8 +13,7 @@ Place an x in relevant bracket lines [X]
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+- [ ] Breaking change (fix or feature that could cause existing functionality to not work as expected, or change its function)
 
 ## Change Affects Area
 
