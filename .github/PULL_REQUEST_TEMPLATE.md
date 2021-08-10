@@ -1,5 +1,5 @@
 ## JIRA Task Link
-Provide a link to your Jira Task here
+Provide a link to your Jira Task here. Additionally, put JIRA task # in title of PR
 
 ## Related Pull Requests
 If you have a related DB Migration
